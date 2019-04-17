@@ -41,8 +41,8 @@ function Ball(x, y, radius, color) {
     this.radius = radius
     this.color = color
     this.velocity = {
-        x: utils.randomIntFromRange(-10, 10),
-        y: 3
+        x: utils.randomIntFromRange(-5, 5),
+        y: 2
     }
     this.gravity = 0.2
     this.friction = 0.8
@@ -154,7 +154,6 @@ let miniBalls
 let ticker = 0
 
 let gradientBg
-let moon
 function init() {
     balls = []
     miniBalls = []
@@ -172,19 +171,53 @@ function drawBackground() {
 
 // moon
 function drawMoon() {
+    c.save()
     var moonGradient = c.createRadialGradient(120, 80, 10, 100, 100, 50);
     moonGradient.addColorStop(0.3, "#ffffff");
     moonGradient.addColorStop(0.9, "#ffff66");
     c.beginPath()
     c.arc(100, 100, 50, 0, Math.PI*2);
     c.fillStyle = moonGradient
+    c.shadowColor = '#ffff66'
+    c.shadowBlur = 50
     c.fill()
     c.closePath()
+    c.restore()
+}
+
+// tree
+function drawTree(startx, starty, len, angle, width) {
+    c.save()
+    c.beginPath()
+    c.translate(startx, starty)
+    c.rotate(angle * Math.PI / 180)
+    c.moveTo(0, 0)
+    c.lineTo(0, -len)
+
+    c.lineWidth = width
+    c.strokeStyle = 'white'
+    c.stroke()
+
+
+    if (len < 10) {
+        c.restore()
+        return
+    }
+
+    drawTree(0, -len, len*0.5, 10, width*0.8)
+    drawTree(0, -len, len*0.8, 20, width* 0.8)
+ 
+    drawTree(0, -len, len*0.6, -15, width* 0.8)   
+    drawTree(0, -len, len*0.6, -35, width* 0.8)   
+
+    c.restore()
 }
 
 // Animation Loop
 function animate() {
     requestAnimationFrame(animate)
+
+    c.clearRect(0, 0, canvas.width, canvas.height)
 
     // draw background
     c.fillStyle = gradientBg
@@ -193,6 +226,12 @@ function animate() {
     // draw moon
     drawMoon()
     
+
+    // draw tree
+    drawTree(canvas.width/2, canvas.height, 80, -5, 3)
+    drawTree(canvas.width/2 - 40, canvas.height, 40, 10, 3)
+    drawTree(canvas.width/2 - 20, canvas.height, 50, -2, 3)
+
     balls.forEach(b => {
         b.update()
     });
@@ -210,7 +249,7 @@ function animate() {
     ticker++
 
     if (ticker % SPAWN_RATE == 0) {
-        var radius = Math.random() * 10 + 5
+        var radius = Math.random() * 3 + 5
         var ball = new Ball(utils.randomIntFromRange(100 + radius, canvas.width - radius * 2), 
                             0, 
                             radius, 
