@@ -1,7 +1,16 @@
+
+@mixin abs-pos {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .content {
     margin: 0;
 
     canvas {
         display: block;
+        @include abs-pos()
     }
 }
