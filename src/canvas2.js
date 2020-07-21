@@ -6,7 +6,7 @@ const c2 = canvas2.getContext('2d')
 
 canvas2.width = innerWidth
 canvas2.height = innerHeight
-let num_trees= canvas2.width / 100
+let num_trees= canvas2.width / 150
 addEventListener('resize', () => {
     num_trees =  innerWidth / 100
     canvas2.width = innerWidth
@@ -69,7 +69,6 @@ function drawTree(startx, starty, len, angle, width, opacity=1) {
 
     // drawTree(0, -len, len*0.39, 15, width*0.8, opacity * 0.9)
     drawTree(0, -len, len*0.69, 23, width* 0.85, opacity * 0.9)
- 
     drawTree(0, -len, len*0.47, -15, width* 0.85, opacity * 0.95)   
     drawTree(0, -len, len*0.76, -33, width* 0.65, opacity * 0.9)   
 

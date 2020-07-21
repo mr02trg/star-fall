@@ -14,7 +14,7 @@ const mouse = {
 }
 
 const MIN_RADIUS_THRESHOLD = 1
-const SPAWN_RATE = 50
+const SPAWN_RATE = 20
 let NUM_STARS = canvas1.width * 0.25
 
 // Event Listeners
